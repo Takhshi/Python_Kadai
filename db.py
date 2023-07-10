@@ -5,8 +5,8 @@ def get_connection():
     connection = psycopg2.connect(url)
     return connection
 
-def insert_user(user_name, mail, password):
-    sql = 'INSERT INTO user_account VALUES (default, %s, %s, %s, %s)'
+def insert_user(user_name, password):
+    sql = 'INSERT INTO user_account VALUES (default, %s, %s, %s)'
 
     salt = get_salt() # ソルトの生成
     hashed_password = get_hash(password, salt) # 生成したソルトでハッシュ
@@ -14,7 +14,7 @@ def insert_user(user_name, mail, password):
     try : # 例外処理
         connection = get_connection()
         cursor = connection.cursor()
-        cursor.execute(sql, (user_name, mail, password, salt))
+        cursor.execute(sql, (user_name, password, salt))
         count = cursor.rowcount # 更新件数を取得
         connection.commit()
         
