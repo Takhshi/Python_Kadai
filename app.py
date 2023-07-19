@@ -64,6 +64,31 @@ def register_exe():
     else:
         error = '登録に失敗しました。'
         return render_template('register.html', error=error)
+
+@app.route('/register_adsence')
+def register_adsence_form():
+    return render_template('register_adsence.html')
+
+@app.route('/register_adsence_exe', methods=['POST'])
+def register_adsence_exe():
+    user_name = request.form.get('username')
+    reason = request.form.get('reason')
+    
+    if user_name == '':
+        error = 'ユーザ名が未入力です。'
+        return render_template('register_adsence.html', error=error, user_name=user_name, reason=reason)
+    if reason == '':
+        error = '欠席理由が未入力です。'
+        return render_template('register_adsence.html', error=error, user_name=user_name, reason=reason)
+    
+    count = db.insert_absence(user_name, reason)
+    
+    if count == 1:
+        msg = '登録が完了しました。'
+        return redirect(url_for('register_adsence', msg=msg))
+    else:
+        error = '登録に失敗しました。'
+        return render_template('register_adsence.html', error=error)
  
 if __name__ == '__main__':
     app.run(debug=True)

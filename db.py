@@ -63,3 +63,41 @@ def login(user_name, password):
         connection.close()
         
     return flg
+
+def insert_absence(user_name, reason):
+    sql = 'INSERT INTO user_adsence VALUES (default, %s, %s)'
+
+    try : # 例外処理
+        connection = get_connection() 
+        cursor = connection.cursor()
+        cursor.execute(sql, (user_name, reason))
+        count = cursor.rowcount # 更新件数を取得
+        connection.commit()
+        
+    except psycopg2.DatabaseError: # Java でいうcatch 失敗した時の処理をここに書く
+        count = 0 # 例外が発生したら0 をreturn する。
+    
+    finally: # 成功しようが、失敗しようが、close する。
+        cursor.close()
+        connection.close()
+    
+    return count
+
+def list_absence(user_name, reason):
+    sql = 'SELECT * FROM user_absence'
+
+    try : # 例外処理
+        connection = get_connection() 
+        cursor = connection.cursor()
+        cursor.execute(sql, (user_name, reason))
+        count = cursor.rowcount # 更新件数を取得
+        connection.commit()
+        
+    except psycopg2.DatabaseError: # Java でいうcatch 失敗した時の処理をここに書く
+        count = 0 # 例外が発生したら0 をreturn する。
+    
+    finally: # 成功しようが、失敗しようが、close する。
+        cursor.close()
+        connection.close()
+    
+    return count
