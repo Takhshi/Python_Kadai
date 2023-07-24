@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if msg != null %}
+        <p style="color:blue">{{msg}}</p>
+    {% endif %}
+    <h1>欠席情報一覧</h1>
+
+    <form action="{{ url_for('search_absence') }}" method="POST">
+        <label for="criteria">検索ワード:</label>
+        <select id="criteria" name="criteria">
+            <option value="date">日付</option>
+            <option value="department">学科</option>
+            <option value="name">名前</option>
+        </select>
+        <input type="text" id="keyword" name="keyword">
+        <input type="submit" value="検索">
+    </form>
+
+    <table>
+        <tr>
+            <th>日付</th>
+            <th>学科</th>
+            <th>名前</th>
+            <th>欠席理由</th>
+        </tr>
+        {% for date, department, name, reason in absence_list %}
+        <tr>
+            <td>{{ date }}</td>
+            <td>{{ department }}</td>
+            <td>{{ name }}</td>
+            <td>{{ reason }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{url_for('mypage')}}">戻る</a>
+</body>
+</html>

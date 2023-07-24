@@ -12,6 +12,7 @@
     {% endif %}
         <form action="{{url_for('register_exe')}}" method="post">
             ユーザー名:<input type="text" name="username" value="{{user_name}}"><br>
+            メールアドレス:<input type="text" name="mail" value="{{mail}}"><br>
             パスワード:<input type="password" name="password" value="{{password}}"><br>
             <button type="submit">登録</button>
         </form>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>欠席情報登録</h3>
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
+    <form action="{{ url_for('register_absence_exe') }}" method="post">
+        日付:<input type="text" name="date" value="{{ date }}"><br>
+        学科:<input type="text" name="department" value="{{ department }}"><br>
+        名前:<input type="text" name="name" value="{{ name }}"><br>
+        欠席理由:<input type="text" name="reason" value="{{ reason }}"><br>
+        <button type="submit">登録</button>
+    </form>
+    <a href="{{ url_for('mypage') }}">戻る</a>
+</body>
+</html>
