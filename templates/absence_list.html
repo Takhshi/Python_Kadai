@@ -1,48 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>欠席情報一覧</title>
-</head>
-<body>
-    {% if msg != null %}
-        <p style="color:blue">{{msg}}</p>
-    {% endif %}
-    <h1>欠席情報一覧</h1>
+{% extends "layout.html" %}
 
-    <form action="{{ url_for('search_absence') }}" method="POST">
-        <label for="criteria">検索ワード:</label>
-        <select id="criteria" name="criteria">
-            <option value="date">日付</option>
-            <option value="department">学科</option>
-            <option value="name">名前</option>
-        </select>
-        <input type="text" id="keyword" name="keyword">
-        <input type="submit" value="検索">
-    </form>
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/absence_list.css')}}">
+{% endblock %}
 
-    <table>
-        <tr>
-            <th>日付</th>
-            <th>学科</th>
-            <th>名前</th>
-            <th>欠席理由</th>
-            <th>編集</th>
-            <th>削除</th> <!-- 削除ボタンを追加 -->
-        </tr>
-        {% for date, department, name, reason in absence_list %}
-        <tr>
-            <td>{{ date }}</td>
-            <td>{{ department }}</td>
-            <td>{{ name }}</td>
-            <td>{{ reason }}</td>
-            <td><a href="{{ url_for('edit_absence', id=date) }}">編集</a></td>
-            <td><a href="{{ url_for('delete_absence', id=date) }}">削除</a></td> <!-- 削除ボタンを追加 -->
-        </tr>
-        {% endfor %}
-    </table>
+{% block content %}
+{% if msg != null %}
+<p style="color:blue">{{msg}}</p>
+{% endif %}
+<h1>欠席情報一覧</h1>
 
-    <a href="{{url_for('mypage')}}">戻る</a>
-</body>
-</html>
+<form action="{{ url_for('search_absence') }}" method="POST">
+<label for="criteria">検索ワード:</label>
+<select id="criteria" name="criteria">
+    <option value="date">日付</option>
+    <option value="department">学科</option>
+    <option value="name">名前</option>
+</select>
+<input type="text" id="keyword" name="keyword">
+<input type="submit" value="検索">
+</form>
+<br>
+<table class="table table-striped">
+<thead>
+<tr>
+    <th>日付</th>
+    <th>学科</th>
+    <th>名前</th>
+    <th>欠席理由</th>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+{% for date, department, name, reason in absence_list %}
+<tr>
+    <td>{{ date }}</td>
+    <td>{{ department }}</td>
+    <td>{{ name }}</td>
+    <td>{{ reason }}</td>
+    <td><a href="{{ url_for('delete_absence', id=date) }}">削除</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

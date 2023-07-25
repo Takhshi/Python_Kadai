@@ -1,0 +1,34 @@
+body {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  margin: 50px auto;
+}
+
+form {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin: 15px 0;
+  display: flex; /* flexコンテナにする */
+  align-items: center; /* アイテムを垂直中央に配置 */
+}
+
+label {
+  width: 80px; /* カラム名の幅を指定 */
+}
+
+input, select {
+  flex: 1; /* 入力フィールドとプルダウンメニューが均等に広がるようにする */
+}
+
+button {
+  margin: 30px;
+  width: 150px;
+}
+

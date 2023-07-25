@@ -1,0 +1,17 @@
+.boxwrap{
+  text-align: center;
+  margin: 60px auto;
+  width:800px;
+  padding:20px 60px;
+}
+.wrap{
+margin: auto;
+width: 150px;
+height: 50px;
+background-color: #ffffff;
+border-radius: 5px;
+border-style: solid;
+border-color: blue;
+text-align: center;
+line-height: 50px;
+}

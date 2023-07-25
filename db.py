@@ -87,7 +87,7 @@ def get_absence_list():
     connection = get_connection()
     cursor = connection.cursor()
 
-    sql = 'SELECT date, department, name, reason FROM user_absence ORDER BY date, department, name'
+    sql = 'SELECT date, department, name, reason FROM user_absence ORDER BY date DESC, department, name'
 
     cursor.execute(sql)
     rows = cursor.fetchall()
@@ -100,7 +100,7 @@ def search_absence_by_criteria(criteria, keyword):
     connection = get_connection()
     cursor = connection.cursor()
 
-    sql = 'SELECT date, department, name, reason FROM user_absence WHERE {} = %s ORDER BY date, department, name'.format(criteria)
+    sql = 'SELECT date, department, name, reason FROM user_absence WHERE {} = %s ORDER BY date DESC, department, name'.format(criteria)
 
     cursor.execute(sql, (keyword,))
     rows = cursor.fetchall()
@@ -109,10 +109,26 @@ def search_absence_by_criteria(criteria, keyword):
     connection.close()
     return rows
 
-def update_absence(id, reason):
-    sql = 'UPDATE user_absence SET reason=%s WHERE date=%s'
+def get_absence_by_id(id):
+    sql = 'SELECT date, department, name, reason FROM user_absence WHERE id = %s'
+
     try:
-        connection = get_connection() 
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (id,))
+        absence_info = cursor.fetchone()
+    except psycopg2.DatabaseError:
+        absence_info = None
+    finally:
+        cursor.close()
+        connection.close()
+
+    return absence_info
+
+def update_absence(id, reason):
+    sql = 'UPDATE user_absence SET reason = %s WHERE id = %s'
+    try:
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(sql, (reason, id))
         count = cursor.rowcount
@@ -122,8 +138,9 @@ def update_absence(id, reason):
     finally:
         cursor.close()
         connection.close()
-    
+
     return count
+
 
 def delete_absence(id):
     sql = 'DELETE FROM user_absence WHERE date = %s'

@@ -1,0 +1,13 @@
+h1 {
+  text-align: center;
+  margin: 40px auto;
+}
+
+form {
+  text-align: right;
+  padding-right: 30px;
+}
+
+a {
+  color: red;
+}

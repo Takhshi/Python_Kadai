@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>マイページ</h3>
-    <p>ようこそ</p><br>
-    <a href="{{url_for('register_absence_form')}}">欠席登録</a><br>
-    <a href="{{url_for('show_absence_list')}}">欠席登録一覧</a><br>
-    <a href="{{url_for('logout')}}">ログアウト</a>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='/css/mypage.css')}}">
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="boxwrap">
+<h1>欠席情報管理システム</h1><br>
+<br>
+<div class="wrap pattern-1 mgb-20"> 
+  <a href="{{url_for('register_absence_form')}}">登録</a><br>
+</div><br>
+<div class="wrap pattern-1 mgb-20"> 
+  <a href="{{url_for('show_absence_list')}}">一覧</a><br>
+</div><br>
+<div class="wrap pattern-1 mgb-20"> 
+  <a href="{{url_for('logout')}}">ログアウト</a>
+</div>
+
+{% endblock %}

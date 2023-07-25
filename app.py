@@ -51,13 +51,13 @@ def register_exe():
     password = request.form.get('password')
     
     if user_name == '':
-        error = 'ユーザ名が未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register.html', error=error, user_name=user_name, mail=mail, password=password)
     if mail == '':
-        error = 'メールアドレスが未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register.html', error=error, user_name=user_name, mail=mail, password=password)
     if password == '':
-        error = 'パスワードが未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register.html', error=error, user_name=user_name, mail=mail, password=password)
     
     count = db.insert_user(user_name, mail, password)
@@ -81,16 +81,16 @@ def register_absence_exe():
     reason = request.form.get('reason')
     
     if date == '':
-        error = '日付が未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register_absence.html', error=error, date=date, department=department, name=name, reason=reason)
     if department == '':
-        error = '学科が未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register_absence.html', error=error, date=date, department=department, name=name, reason=reason)
     if name == '':
-        error = '学生の名前が未入力です。'
+        error = '未入力の項目があります。'
         return render_template('register_absence.html', error=error, date=date, department=department, name=name, reason=reason)
     if reason == '':
-        error = '欠席理由が未入力です。'
+        error = '未入力の項目があります。。'
         return render_template('register_absence.html', error=error, date=date, department=department, name=name, reason=reason)
     
     count = db.insert_absence(date, department, name, reason)
