@@ -114,29 +114,35 @@ def search_absence():
     absence_list = db.search_absence_by_criteria(criteria, keyword)
     return render_template('absence_list.html', absence_list=absence_list)
  
-@app.route('/update_absence')
-def update_absence():
-    return render_template('update_absence.html')
+@app.route('/edit_absence')
+def edit_absence():
+    return render_template('edit_absence.html')
  
-@app.route('/update_absence_exe', methods=['GET', 'POST'])
-def update_absence_exe(id):
+@app.route('/edit_absence_exe/<string:id>', methods=['POST'])
+def edit_absence_exe(id):
+    absence_info = db.get_absence_by_id(id)
     if request.method == 'POST':
-        date = request.form.get('date')
-        department = request.form.get('department')
-        name = request.form.get('name')
         reason = request.form.get('reason')
 
-        count = db.update_absence(id, date, department, name, reason)
+        count = db.update_absence(id, reason)
 
         if count == 1:
             msg = '更新が完了しました。'
             return redirect(url_for('show_absence_list', msg=msg))
         else:
             error = '更新に失敗しました。'
-            return render_template('update_absence.html', id=id, error=error, date=date, department=department, name=name, reason=reason)
+            return render_template('edit_absence.html', id=id, error=error, reason=reason)
     else:
-        absence_info = db.get_absence_by_id(id)
-        return render_template('update_absence.html', id=id, date=absence_info[0], department=absence_info[1], name=absence_info[2], reason=absence_info[3])
+        return render_template('edit_absence.html', id=id, reason=absence_info[3])
+ 
+@app.route('/delete_absence/<string:id>')
+def delete_absence(id):
+    count = db.delete_absence(id)
+    if count == 1:
+        msg = '削除が完了しました。'
+    else:
+        msg = '削除に失敗しました。'
+    return redirect(url_for('show_absence_list', msg=msg))
  
 if __name__ == '__main__':
     app.run(debug=True)

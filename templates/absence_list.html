@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>欠席情報一覧</title>
 </head>
 <body>
     {% if msg != null %}
@@ -28,6 +28,8 @@
             <th>学科</th>
             <th>名前</th>
             <th>欠席理由</th>
+            <th>編集</th>
+            <th>削除</th> <!-- 削除ボタンを追加 -->
         </tr>
         {% for date, department, name, reason in absence_list %}
         <tr>
@@ -35,6 +37,8 @@
             <td>{{ department }}</td>
             <td>{{ name }}</td>
             <td>{{ reason }}</td>
+            <td><a href="{{ url_for('edit_absence', id=date) }}">編集</a></td>
+            <td><a href="{{ url_for('delete_absence', id=date) }}">削除</a></td> <!-- 削除ボタンを追加 -->
         </tr>
         {% endfor %}
     </table>

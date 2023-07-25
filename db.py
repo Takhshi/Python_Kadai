@@ -109,19 +109,34 @@ def search_absence_by_criteria(criteria, keyword):
     connection.close()
     return rows
 
-def update_absence(id, date, department, name, reason):
-    sql = 'UPDATE user_absence SET date=%s, department=%s, name=%s, reason=%s WHERE id=%s'
-          
+def update_absence(id, reason):
+    sql = 'UPDATE user_absence SET reason=%s WHERE date=%s'
     try:
         connection = get_connection() 
         cursor = connection.cursor()
-        cursor.execute(sql, (date, department, name, reason, id))
-        count = cursor.rowcount # 更新件数を取得
+        cursor.execute(sql, (reason, id))
+        count = cursor.rowcount
         connection.commit()
     except psycopg2.DatabaseError:
-        count = 0 # 例外が発生したら0をreturnする。
+        count = 0
     finally:
         cursor.close()
         connection.close()
     
+    return count
+
+def delete_absence(id):
+    sql = 'DELETE FROM user_absence WHERE date = %s'
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(sql, (id,))
+        count = cursor.rowcount
+        connection.commit()
+    except psycopg2.DatabaseError:
+        count = 0
+    finally:
+        cursor.close()
+        connection.close()
+
     return count
