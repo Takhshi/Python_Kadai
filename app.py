@@ -114,7 +114,7 @@ def search_absence():
     absence_list = db.search_absence_by_criteria(criteria, keyword)
     return render_template('absence_list.html', absence_list=absence_list)
  
-@app.route('/edit_absence')
+@app.route('/edit_absence', methods=['GET'])
 def edit_absence():
     return render_template('edit_absence.html')
  
