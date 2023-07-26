@@ -15,16 +15,16 @@ form {
 
 .form-group {
   margin: 15px 0;
-  display: flex; /* flexコンテナにする */
-  align-items: center; /* アイテムを垂直中央に配置 */
+  display: flex;
+  align-items: center;
 }
 
 label {
-  width: 80px; /* カラム名の幅を指定 */
+  width: 80px;
 }
 
 input, select {
-  flex: 1; /* 入力フィールドとプルダウンメニューが均等に広がるようにする */
+  flex: 1;
 }
 
 button {
